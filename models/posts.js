@@ -9,7 +9,7 @@ Post.plugin('contentToHtml',{
 	});
 	},
 
-	after.FindOne: function(post){
+	afterFindOne: function(post){
 		if(post){
 			post.content = marked(post.content);
 		}
@@ -20,7 +20,7 @@ Post.plugin('contentToHtml',{
 
 module.exports = {
 	create: function create(post){
-		return Post.create(post).exrc();
+		return Post.create(post).exec();
 	},
 
 	getPostById:function getPostById(postId){
@@ -43,12 +43,28 @@ module.exports = {
 			.sort({_id:-1})
 			.addCreateAt()
 			.contentToHtml()
-			.exex();
+			.exec();
 	},
 
 	incPv: function incPv(postId){
 		return Post
 			.update({_id:postId},{$inc:{pv:1}})
 			.exec();
+	},
+
+	//根据ID获取文章原生内容
+	getRawPostById: function getRawPostById(postId){
+		return Post
+			.findOne({_id:postId})
+			.populate({path:'author',model:'User'})
+			.exec();
+	},
+
+	updatePostById: function updatePostById(postId,author,data){
+		return Post.update({author:author,_id:postId},{$set:data}).exec();
+	},
+
+	delPostById:function delPostById(postId,author){
+		return Post.remove({author:author,_id:postId}).exec();
 	}
 };

@@ -1,1 +1,4 @@
 mongod -dbpath "C:\Program Files\mongodb\data\db"
+
+use A       使用A数据库
+db.B.find() 查找B表下所有条目
