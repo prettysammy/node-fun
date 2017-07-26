@@ -1,4 +1,6 @@
 mongod -dbpath "C:\Program Files\mongodb\data\db"
 
 use A       使用A数据库
-db.B.find() 查找B表下所有条目
+show collections 查找集合
+db.B.find() 查找B集合下所有条目
+db.B.remove({x:x}) 删除B集合满足x:x的条目 没有x:x删除所有
